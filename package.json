@@ -3,6 +3,7 @@
   "version": "0.1.4",
   "description": "React Kanban",
   "author": "Megan Coyle",
+  "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --progress",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p --progress --colors"
