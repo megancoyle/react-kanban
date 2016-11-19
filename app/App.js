@@ -6,14 +6,16 @@ let cardsList = [
   {
     id: 1,
     title: "Read the Book",
-    description: "I should read it",
+    description: "I should **read** it",
+    color: '#BD8D31',
     status: "in-progress",
     tasks: []
   },
   {
     id: 2,
     title: "Code a lot",
-    description: "Code after looking at examples online",
+    description: "Code after looking at examples online at [github](http://github.com)",
+    color: '#3A7E28',
     status: "todo",
     tasks: [
       {
