@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import CheckList from '../CheckList';
 import marked from 'marked';
 
@@ -48,5 +48,10 @@ class Card extends Component {
     );
   }
 }
+
+Card.propTypes = {
+  cardId: PropTypes.number,
+  tasks: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default Card;
