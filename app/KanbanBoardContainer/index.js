@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import KanbanBoard from './KanbanBoard';
+import KanbanBoard from '../KanbanBoard';
 import 'whatwg-fetch';
 
 const API_URL = 'http://kanbanapi.pro-react.com';
@@ -9,43 +9,48 @@ const API_HEADERS = {
 };
 
 class KanbanBoardContainer extends Component {
-  constructor(){
-    super(...arguments);
+  constructor(props) {
+    super(props);
     this.state = {
-      cards: [],
+      cards: []
     };
   }
 
-componentDidMount(){
-  fetch(API_URL+'/cards', {headers: API_HEADERS})
-  .then((response) => response.json())
-  .then((responseData) => {
-    this.setState({cards: responseData});
-  })
-  .catch((error) => {
-    console.log('Error fetching and parsing data', error);
-  });
-}
+  componentDidMount(){
+    fetch(API_URL+'/cards', {headers: API_HEADERS})
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({cards: responseData});
+      })
+      .catch((error) => {
+        console.log('Error fetching and parsing data', error);
+      });
+  }
 
-addTask(cardId, taskName){
+  addTask(cardId, taskName){
 
-}
+  }
 
-deleteTask(cardId, taskId, taskIndex){
+  deleteTask(cardId, taskId, taskIndex){
 
-}
+  }
 
-toggleTask(cardId, taskId, taskIndex){
+  toggleTask(cardId, taskId, taskIndex){
 
-}
+  }
 
   render() {
+    const { cards } = this.props;
+
     return (
-      <KanbanBoard cards={cards}
-                        taskCallbacks={{
-                          toggle: this.toggleTask.bind(this),
-                          delete: this.deleteTask.bind(this),
-                          add: this.addTask.bind(this) }}/>
+      <KanbanBoard
+        cards={cards}
+        taskCallbacks={{
+          toggle: this.toggleTask.bind(this),
+          delete: this.deleteTask.bind(this),
+          add: this.addTask.bind(this)
+        }}
+      />
     )
   }
 }

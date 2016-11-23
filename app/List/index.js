@@ -6,11 +6,11 @@ class List extends Component {
     let cards = this.props.cards.map((card) => {
       return <Card key={card.id}
                   taskCallbacks={this.props.taskCallbacks}
-                  {id={card.id}
+                  id={card.id}
                   title={card.title}
                   description={card.description}
                   color={card.color}
-                  tasks={card.tasks}} />
+                  tasks={card.tasks} />
     });
 
     return (
