@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import update from 'react-addons-update';
 import KanbanBoard from '../KanbanBoard';
+// Polyfills
+import 'babel-polyfill'
 import 'whatwg-fetch';
 
 const API_URL = 'http://kanbanapi.pro-react.com';
 const API_HEADERS = {
-  'Content-Type': 'appication/json',
+  'Content-Type': 'application/json',
   Authorization: 'any-string-here'
 };
 
@@ -12,27 +15,29 @@ class KanbanBoardContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: []
+      cards: [],
     };
   }
 
   componentDidMount(){
-    fetch(API_URL+'/cards', {headers: API_HEADERS})
+    fetch(`${API_URL}/cards`, {headers: API_HEADERS})
       .then((response) => response.json())
       .then((responseData) => {
-        this.setState({cards: responseData});
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+        this.setState({
+          cards: responseData
+        })
+
+      window.state = this.state;
+    });
   }
 
   addTask(cardId, taskName){
     // Find the index of the card
+    let prevState = this.state;
     let cardIndex = this.state.cards.findIndex((card)=>card.id == cardId);
 
     // Create a new task with the given name and a temporary ID
-    let newTask = {id:Date.noth(), name:taskName, done:false};
+    let newTask = {id:Date.now(), name:taskName, done:false};
     // Create a new object and push the new task to the array of tasks
     let nextState = update(this.state.cards, {
       [cardIndex]: {
@@ -48,19 +53,30 @@ class KanbanBoardContainer extends Component {
       headers: API_HEADERS,
       body: JSON.stringify(newTask)
     })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok){
+        return respons.json()
+      } else {
+        //throw an error if the server response wasn't okay
+        throw new Error("Server response wasn't OK")
+      }
+    })
     .then((responseData) => {
       // When the server returns the definite ID
       // used for the new Task on the server, update it on React
       newTask.id=responseData.id
       this.setState({cards:nextState});
+    })
+    .catch((error) => {
+      this.setState(prevState)
     });
   }
 
   deleteTask(cardId, taskId, taskIndex){
     // Find the index of the card
-    let cardIndex = this.state.cards.findIndex((card) =>card.id == cardId);
-
+    let cardIndex = this.state.cards.findIndex((card) => card.id == cardId);
+    // keep a reference to the original state prior to mutations
+    let prevState = this.state;
     // Create a new object without the task
     let nextState = update(this.state.cards, {
       [cardIndex]: {
@@ -73,10 +89,22 @@ class KanbanBoardContainer extends Component {
     fetch(`${API_URL}/cards/${cardId}/tasks/${taskId}`, {
       method: 'delete',
       headers: API_HEADERS
+    })
+    .then((response) => {
+      if(!response.ok){
+        //throw an error if server response wasn't ok
+        throw new Error("Server response wasn't OK")
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error)
+      this.setState(prevState);
     });
   }
 
   toggleTask(cardId, taskId, taskIndex){
+    // keep reference to previous state
+    let prevState = this.state;
     // Find the index of the card
     let cardIndex = this.state.cards.findIndex((card)=>card.id == cardId);
     // Save a reference to the task's 'done' value
@@ -103,15 +131,23 @@ class KanbanBoardContainer extends Component {
       method: 'put',
       headers: API_HEADERS,
       body: JSON.stringify({done:newDoneValue})
+    })
+    .then((response) => {
+      if(!response.ok){
+        // throw an error if server response wasn't ok
+        throw new Error("Server response wasn't OK")
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error)
+      this.setState(prevState);
     });
   }
 
   render() {
-    const { cards } = this.props;
-
     return (
       <KanbanBoard
-        cards={cards}
+        cards={this.state.cards}
         taskCallbacks={{
           toggle: this.toggleTask.bind(this),
           delete: this.deleteTask.bind(this),
