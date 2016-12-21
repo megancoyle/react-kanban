@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import CardForm from '../CardForm'
+import CardForm from './CardForm'
 
-class EditCard extends Component {
+class NewCard extends Component {
 
   componentWillMount(){
-    let card = this.props.cards.find((card)=>card.id == this.props.params.card_id);
     this.setState({
       id: Date.now(),
       title: '',
@@ -21,7 +20,7 @@ class EditCard extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    this.props.cardCallbacks.updateCard(this.state);
+    this.props.cardCallbacks.addCard(this.state);
     this.props.history.pushState(null, '/');
   }
 
@@ -32,16 +31,16 @@ class EditCard extends Component {
   render(){
     return (
       <CardForm draftCard={this.state}
-        buttonLabel="Edit Card"
+        buttonLabel="Create Card"
         handleChange={this.handleChange.bind(this)}
         handleSubmit={this.handleSubmit.bind(this)}
         handleClose={this.handleClose.bind(this)} />
-    )
+    );
   }
 }
 
-EditCard.propTypes = {
+NewCard.propTypes = {
   cardCallbacks: PropTypes.object,
 };
 
-export default EditCard;
+export default NewCard;

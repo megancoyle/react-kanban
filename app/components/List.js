@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
-import Card from '../Card';
+import Card from './Card';
 import constants from '../constants';
 
 const listTargetSpec = {
