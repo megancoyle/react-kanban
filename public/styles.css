@@ -1,9 +1,9 @@
-* {
+*{
   box-sizing: border-box;
 }
 
-html, body, #app {
-  height: 100%;
+html,body,#root {
+  height:100%;
   margin: 0;
   padding: 0;
 }
@@ -13,7 +13,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-h1 {
+h1{
   font-weight: 200;
   color: #3b414c;
   font-size: 20px;
@@ -27,7 +27,7 @@ ul {
 
 .app {
   white-space: nowrap;
-  height: 100%;
+  height:100%;
 }
 
 .list {
@@ -64,60 +64,19 @@ ul {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
-.card_title {
+.card__title {
   font-weight: bold;
   border-bottom: solid 5px transparent;
 }
 
-.card_title:before {
+.card__title:before {
   display: inline-block;
   width: 1em;
-  content: '→';
+  content: '▸';
 }
 
-.card_title--is-open:before {
-  content: '↓';
-}
-
-.checklist--add-task {
-  border: 1px dashed #bbb;
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 3px;
-}
-
-/* Transition styles */
-.toggle-enter {
-  max-height: 0;
-  overflow: hidden;
-}
-
-.toggle-enter.toggle-enter-active {
-  max-height: 300px;
-  overflow: hidden;
-  transition: max-height .25s ease-in;
-}
-
-.toggle-leave {
-  max-height: 300px;
-  overflow: hidden;
-}
-
-.toggle-leave.toggle-leave-active {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .25s ease-out;
-}
-
-/* CardForm styling */
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0; bottom: 0; right: 0;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.6);
+.card__title--is-open:before {
+  content: '▾';
 }
 
 .card.big {
@@ -130,12 +89,11 @@ ul {
   z-index: 3;
 }
 
-.card.big input[type=text], .card.big textarea {
-  width: 100%;
+.card.big input[type=text], textarea {
+  width : 100%;
   margin: 3px 0;
   font-size: 13px;
   border: none;
-  display: block;
 }
 
 .card.big input[type=text] {
@@ -162,8 +120,77 @@ ul {
 }
 
 .card.big button {
-  font-size: 14px;
+  font-size:14px;
   padding: 8px;
+}
+
+.card__edit{
+  position: absolute;
+  top:10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity .25s ease-in;
+}
+
+.card:hover .card__edit{
+  opacity: 1;
+}
+
+.card__edit a{
+  text-decoration: none;
+  color: #999;
+  font-size: 17px;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0; bottom: 0; right: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.toggle-enter {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.toggle-enter.toggle-enter-active {
+  max-height: 300px;
+  overflow: hidden;
+  transition: max-height .25s ease-in;
+}
+
+.toggle-leave {
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.toggle-leave.toggle-leave-active {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .25s ease-out;
+}
+
+.checklist__task:first-child {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: dashed 1px #ddd;
+}
+
+.checklist__task--remove:after{
+  display: inline-block;
+  color: #d66;
+  content: "✖";
+}
+
+.checklist--add-task {
+  border: 1px dashed #bbb;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 3px;
 }
 
 .float-button {
@@ -181,22 +208,4 @@ ul {
   text-decoration: none;
   line-height: 50px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-}
-
-.card_edit {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  opacity: 0;
-  transition: opacity .25s ease-in;
-}
-
-.card:hover .card_edit {
-  opacity: 1;
-}
-
-.card_edit a {
-  text-decoration: none;
-  color: #999;
-  font-size: 17px;
 }

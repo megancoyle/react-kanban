@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Container } from 'flux/utils';
+import {Container} from 'flux/utils';
 import KanbanBoard from './KanbanBoard';
 import CardActionCreators from '../actions/CardActionCreators';
 import CardStore from '../stores/CardStore';
 
 class KanbanBoardContainer extends Component {
+
   componentDidMount(){
     CardActionCreators.fetchCards();
   }
+
 
   render() {
     let kanbanBoard = this.props.children && React.cloneElement(this.props.children, {
@@ -16,6 +18,7 @@ class KanbanBoardContainer extends Component {
 
     return kanbanBoard;
   }
+
 }
 
 KanbanBoardContainer.getStores = () => ([CardStore]);

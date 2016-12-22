@@ -10,24 +10,23 @@ class KanbanBoard extends Component {
       <div className="app">
         <Link to='/new' className="float-button">+</Link>
 
-        <List id='todo' title="To Do" cards={
-          this.props.cards.filter((card) => card.status === "todo")
-        } />
-        <List id='in-progress' title="In Progress" cards={
-          this.props.cards.filter((card) => card.status == "in-progress")
-        } />
+        <List id='todo'
+              title="To Do"
+              cards={this.props.cards.filter((card) => card.status === "todo")} />
+        <List id='in-progress'
+              title="In Progress"
+              cards={this.props.cards.filter((card) => card.status === "in-progress")} />
+        <List id='done'
+              title='Done'
+              cards={this.props.cards.filter((card) => card.status === "done")} />
 
-        <List id='done' title='Done' cards={
-          this.props.cards.filter((card) => card.status == "done")
-        } />
-
-        {this.props.children}
+            {this.props.children}
       </div>
-    )
+    );
   }
-}
+};
 KanbanBoard.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.object)
-}
+  cards: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default DragDropContext(HTML5Backend)(KanbanBoard);

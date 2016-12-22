@@ -6,11 +6,11 @@ import update from 'react-addons-update';
 let defaultDraft = () => {
   return {
     id: Date.now(),
-    title: '',
-    description: '',
-    status: 'todo',
-    color: '#c9c9c9',
-    tasks: []
+    title:'',
+    description:'',
+    status:'todo',
+    color:'#c9c9c9',
+    tasks:[]
   }
 };
 
@@ -30,15 +30,15 @@ class DraftStore extends ReduceStore {
           return defaultDraft();
         }
 
-        case constants.UPDATE_DRAFT:
-          return update(this.getState(), {
-            [action.payload.field]: {
-              $set: action.payload.value
-            }
-          });
+      case constants.UPDATE_DRAFT:
+        return update(this.getState(), {
+          [action.payload.field]: {
+            $set: action.payload.value
+          }
+        });
 
-        default:
-          return state;
+      default:
+        return state;
     }
   }
 }

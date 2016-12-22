@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import marked from 'marked';
 import { DragSource, DropTarget } from 'react-dnd';
 import constants from '../constants';
 import CheckList from './CheckList';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import CardActionCreators from '../actions/CardActionCreators';
+import shallowCompare from 'react-addons-shallow-compare';
 
 let titlePropType = (props, propName, componentName) => {
   if (props[propName]) {
@@ -16,7 +17,7 @@ let titlePropType = (props, propName, componentName) => {
       );
     }
   }
-}
+};
 
 const cardDragSpec = {
   beginDrag(props) {
@@ -28,14 +29,15 @@ const cardDragSpec = {
   endDrag(props) {
     CardActionCreators.persistCardDrag(props);
   }
-};
+}
 
 const cardDropSpec = {
   hover(props, monitor) {
     const draggedId = monitor.getItem().id;
-    if(props.id !== draggedId) {
+    if(props.id !== draggedId){
       CardActionCreators.updateCardPosition(draggedId, props.id);
     }
+
   }
 }
 
@@ -52,24 +54,27 @@ let collectDrop = (connect, monitor) => {
 }
 
 class Card extends Component {
-
   toggleDetails() {
     CardActionCreators.toggleCardDetails(this.props.id);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
+  }
+
   render() {
-    const { isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { connectDragSource, connectDropTarget } = this.props;
 
     let cardDetails;
-      if (this.props.showDetails !== false) {
-        cardDetails = (
-          <div className="card_details">
-            <span dangerouslySetInnerHTML={{__html:marked(this.props.description)}} />
-            <CheckList taskCallbacks={this.props.taskCallbacks}
-                tasks={this.props.tasks} cardId={this.props.id}/>
-          </div>
-        );
-      }
+    if (this.props.showDetails !== false) {
+      cardDetails = (
+        <div className="card__details">
+          <span dangerouslySetInnerHTML={{__html:marked(this.props.description)}} />
+            <CheckList cardId={this.props.id}
+                       tasks={this.props.tasks}/>
+        </div>
+      );
+    }
 
     let sideColor = {
       position: 'absolute',
@@ -84,34 +89,31 @@ class Card extends Component {
     return connectDropTarget(connectDragSource(
       <div className="card">
         <div style={sideColor} />
-        <div className="card_edit"><Link to={'/edit/'+ this.props.id}>&#9998;</Link>
-        </div>
+        <div className="card__edit"><Link to={'/edit/'+this.props.id}>✎</Link></div>
         <div className={
-          this.props.showDetails? "card_title card_title--is-open" : "card_title"
-        } onClick={this.toggleDetails.bind(this)}>
-        {this.props.title}
+            this.props.showDetails !== false? "card__title card__title--is-open" : "card__title"
+          } onClick={this.toggleDetails.bind(this)}>
+          {this.props.title}
         </div>
         <ReactCSSTransitionGroup transitionName="toggle"
-          transitionEnterTimeout={250}
-          transitionLeaveTimeout={250}>
-        {cardDetails}
-        </ ReactCSSTransitionGroup>
-       </div>
+                                 transitionEnterTimeout={250}
+                                 transitionLeaveTimeout={250}>
+          {cardDetails}
+        </ReactCSSTransitionGroup>
+      </div>
     ));
   }
 }
-
 Card.propTypes = {
   id: PropTypes.number,
   title: titlePropType,
   description: PropTypes.string,
   color: PropTypes.string,
-  tasks: PropTypes.array,
+  tasks: PropTypes.arrayOf(PropTypes.object),
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired
 };
 
-const dragHighOrderedCard = DragSource(constants.CARD, cardDragSpec, collectDrag)(Card);
-const dragDropHighOrderedCard = DropTarget(constants.CARD, cardDropSpec, collectDrop)(dragHighOrderedCard);
-
-export default dragDropHighOrderedCard;
+const dragHighOrderCard = DragSource(constants.CARD, cardDragSpec, collectDrag)(Card);
+const dragDropHighOrderCard = DropTarget(constants.CARD, cardDropSpec, collectDrop)(dragHighOrderCard);
+export default dragDropHighOrderCard

@@ -4,7 +4,7 @@ import 'babel-polyfill';
 const API_URL = 'http://kanbanapi.pro-react.com';
 const API_HEADERS = {
   'Content-Type': 'application/json',
-  Authorization: 'anything'
+  Authorization: 'whatever-i-want'
 }
 
 let KanbanAPI = {
@@ -24,17 +24,17 @@ let KanbanAPI = {
 
   updateCard(card, draftCard) {
     return fetch(`${API_URL}/cards/${card.id}`, {
-      method: 'put',
-      headers: API_HEADERS,
-      body: JSON.stringify(draftCard)
+    	method: 'put',
+    	headers: API_HEADERS,
+    	body: JSON.stringify(draftCard)
     })
   },
 
   persistCardDrag(cardId, status, index) {
     return fetch(`${API_URL}/cards/${cardId}`, {
-      method: 'put',
-      headers: API_HEADERS,
-      body: JSON.stringify({status, row_order_position: index})
+    	method: 'put',
+    	headers: API_HEADERS,
+    	body: JSON.stringify({status, row_order_position: index})
     })
   },
 
@@ -56,11 +56,12 @@ let KanbanAPI = {
 
   toggleTask(cardId, task) {
     return fetch(`${API_URL}/cards/${cardId}/tasks/${task.id}`, {
-      method: 'put',
-      headers: API_HEADERS,
-      body: JSON.stringify({done:!task.done})
+    	method: 'put',
+    	headers: API_HEADERS,
+    	body: JSON.stringify({done:!task.done})
     })
   }
+
 };
 
 export default KanbanAPI;

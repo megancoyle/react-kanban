@@ -22,14 +22,7 @@ class List extends Component {
     const { connectDropTarget } = this.props;
 
     let cards = this.props.cards.map((card) => {
-      return <Card key={card.id}
-                  taskCallbacks={this.props.taskCallbacks}
-                  cardCallbacks={this.props.cardCallbacks}
-                  id={card.id}
-                  title={card.title}
-                  description={card.description}
-                  color={card.color}
-                  tasks={card.tasks} />
+      return <Card key={card.id} {...card} />
     });
 
     return connectDropTarget(
@@ -39,12 +32,10 @@ class List extends Component {
       </div>
     );
   }
-}
-
+};
 List.propTypes = {
-  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  cards: PropTypes.arrayOf(React.PropTypes.object),
+  cards: PropTypes.arrayOf(PropTypes.object),
   connectDropTarget: PropTypes.func.isRequired
 };
 

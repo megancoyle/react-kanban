@@ -1,9 +1,9 @@
-import { Dispatcher } from 'flux';
+import {Dispatcher} from 'flux';
 import 'babel-polyfill';
 
 class AppDispatcher extends Dispatcher{
   /**
-  * Dispatches three actions for async operation represented by promise
+  * Dispatches three actions for an async operation represented by promise.
   */
   dispatchAsync(promise, types, payload){
     const { request, success, failure } = types;

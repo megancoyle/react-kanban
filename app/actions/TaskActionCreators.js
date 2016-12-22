@@ -26,6 +26,7 @@ let TaskActionCreators = {
       failure: constants.TOGGLE_TASK_ERROR
     }, {cardId, task, taskIndex});
   }
+
 };
 
 export default TaskActionCreators;
