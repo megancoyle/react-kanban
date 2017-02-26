@@ -1,6 +1,8 @@
 # react-kanban
 React JS Kanban App for planning your day-to-day activities.
 
+![Screenshot](screenshot.png)
+
 ## Technologies Used
 * [React JS](https://facebook.github.io/react/)
 * [React DOM](https://facebook.github.io/react/docs/react-dom.html)
