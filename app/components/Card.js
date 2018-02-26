@@ -4,7 +4,7 @@ import marked from 'marked';
 import { DragSource, DropTarget } from 'react-dnd';
 import constants from '../constants';
 import CheckList from './CheckList';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import CardActionCreators from '../actions/CardActionCreators';
 import shallowCompare from 'react-addons-shallow-compare';
 

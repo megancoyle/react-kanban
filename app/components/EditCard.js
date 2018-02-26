@@ -1,8 +1,8 @@
-import React,{Component} from 'react';
+import React,{ Component } from 'react';
 import CardForm from './CardForm';
 import CardStore from '../stores/CardStore';
 import DraftStore from '../stores/DraftStore';
-import {Container} from 'flux/utils';
+import { Container } from 'flux/utils';
 import CardActionCreators from '../actions/CardActionCreators';
 
 import 'babel-polyfill';

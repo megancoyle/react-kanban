@@ -1,4 +1,4 @@
-import {Dispatcher} from 'flux';
+import { Dispatcher } from 'flux';
 import 'babel-polyfill';
 
 class AppDispatcher extends Dispatcher{

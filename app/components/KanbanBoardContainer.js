@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container} from 'flux/utils';
+import { Container } from 'flux/utils';
 import KanbanBoard from './KanbanBoard';
 import CardActionCreators from '../actions/CardActionCreators';
 import CardStore from '../stores/CardStore';
